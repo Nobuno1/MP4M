@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>音楽プレーヤー</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<style>
+		#btn-play {
+			width: 100px;
+			height: 40px;
+			padding: 10px;
+			font-size: 18px;
+		}
+
+		#curtime {
+			font-size: 300px;
+		}
+
+		#input_img {
+			width: 2%;
+		}
+
+		#seekbar {
+			width: 100%
+		}
+	</style>
+</head>
+
+<body>
+
+	<h1>音楽プレーヤー</h1>
+	<label><input id="file" type="file" style="display:none;" accept="audio/*" multiple><img
+			id="input_img"
+			src="data:image/png;base64,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" /></label>
+	<!-- 再生ボタン (最初は利用不可) -->
+	<button id="btn-play" type="button" disabled><i class="fas fa-play"></i></button>
+	<input id="seekbar" type="range" value="0" readonly>
+
+	<div></div>
+	<span id="curtime">--:--</span>/<span id="alltime">--:--</span>
+
+	<!-- 必要なJSファイルを読み込む 
+	<script src="howler.min.js"></script>-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.3/howler.min.js"></script>
+
+
+
+	<script>
+		const btn = document.querySelector("#btn-play");     // <button>
+		const seekbar = document.querySelector("#seekbar");  // <input type="range">
+		const curtime = document.querySelector("#curtime");  // <span>
+		const alltime = document.querySelector("#alltime");  // <span>
+		let duration = 0;   // 曲の長さ
+		let timerid;        // setInterval()の戻り値
+		var whetherinput = false;
+
+
+
+
+		//--------------------------
+		// インスタンスを生成
+		//--------------------------
+		/*
+		const bgm1 = new Howl({
+			src: [
+				//'op.ogg',
+				'光 ! ヒカキン & セイキン.mp3'  // Ogg非対応の場合にMP3を採用する
+			]
+		});
+		
+		*/
+
+		/*
+
+		var inputFile = document.getElementById('file');
+
+		function fileChange(ev) {
+			var target = ev.target;
+			var files = target.files;
+
+			console.log(files);
+			console.log(files[0].name)
+			console.log(target.value)
+			whetherinput = true;
+
+			const bgm1 = new Howl({
+				src: [
+					//'op.ogg',
+					files[0].name  // Ogg非対応の場合にMP3を採用する
+				]
+
+			});
+
+			
+
+
+
+
+
+		}
+*/
+
+
+
+		function fileChange(event) {
+			// Read the file from the input
+			//if (event.files.length > 0) {
+		    var target = event.target;
+			var files = target.files
+			console.log(target.files);
+			var file = files[0];
+			var reader = new FileReader();
+			reader.addEventListener('load', function () {
+				var data = reader.result;
+				// Create a Howler sound
+				var bgm1 = new Howl({
+					src: data,
+					format: file.name.split('.').pop().toLowerCase() // always give file extension: this is optional but helps
+				});
+				console.log(bgm1);
+
+							btn.addEventListener("click", () => {
+				// true=>再生中, false=>停止
+				if (bgm1.playing()) {
+					btn.innerHTML = '<i class="fas fa-play"></i>';  // 「再生ボタン」に変更
+					bgm1.pause();
+				}
+				else {
+					btn.innerHTML = '<i class="fas fa-pause"></i>';  // 「停止ボタン」に変更
+					bgm1.play();
+				}
+			});
+
+
+			/**
+			 * [event] 曲のロード完了時に実行
+			 */
+			bgm1.on("load", () => {
+				// 曲の長さを表示
+				duration = bgm1.duration();
+				alltime.innerHTML = getMMSS(duration);
+
+				// ボタンを使用可能にする
+				btn.removeAttribute("disabled");
+			});
+
+			/**
+			 * [event] 曲の再生開始時に実行
+			 */
+			bgm1.on("play", () => {
+				const len = duration;  //曲の長さを取得
+
+				// タイマースタート
+				timerid = setInterval(() => {
+					let cur = bgm1.seek();
+					// シークバーに現在の再生位置をセット
+					seekbar.value = Math.ceil((cur / len) * 100);  // 百分率(0〜100)に直す
+
+					// 現在の再生時間を更新
+					curtime.innerHTML = getMMSS(cur);
+				}
+					, 200);  // 0.2秒ごとに実行
+			});
+
+			/**
+			 * [event] 曲の一時停止時の実行
+			 */
+			bgm1.on("pause", () => {
+				// タイマーを解除
+				clearInterval(timerid);
+			});
+
+			/**
+			 * [event] 曲の再生終了時に実行
+			 */
+			bgm1.on("end", () => {
+				// タイマーを解除
+				clearInterval(timerid);
+
+				// 「再生ボタン」に変更
+				btn.innerHTML = '<i class="fas fa-play"></i>';
+			});
+			},false)
+
+			//console.log(bgm1);
+			reader.readAsDataURL(file);
+
+
+
+
+			/**
+			 * 秒数をmm:ss形式で返却する
+			 *
+			 * @param {number} sec - 秒数
+			 */
+			function getMMSS(sec) {
+				const mm = Math.floor(sec / 60);  // 分
+				const ss = Math.floor(sec % 60);  // 秒
+
+				return (
+					("00" + mm).slice(-2) + ":" + ("00" + ss).slice(-2)
+				);
+			}
+
+		}
+
+
+		/**
+		 * [event] ボタンクリック時に実行
+		 */		
+		inputFile = document.querySelector('#file');
+		inputFile.addEventListener('change', fileChange, false);
+
+
+
+
+	</script>
+</body>
+
+</html>
+
+<!--
+	Copyright (C) 2022 M.Katsube <katsubemakito@gmail.com>
+https://blog.katsubemakito.net/html5/audio-howlerjs2
+This software is released under the GNU General Public License version 3.
+http://www.gnu.org/licenses/
+-->
